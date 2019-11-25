@@ -2177,6 +2177,10 @@ implements Iterable<List<V>> {
     throws IOException {
         return Serialization.readXls(file);
     }
+    public static final DataFrame<Object> readXlsx(final String file)
+            throws IOException {
+        return Serialization.readXlsx(file);
+    }
 
     /**
      * Read data from the input stream as an
@@ -2199,7 +2203,7 @@ implements Iterable<List<V>> {
      * @return a new data frame
      * @throws IOException if an error occurs reading the input stream
      */
-    public static final DataFrame<Object> readXlsx(final InputStream input)
+    public static DataFrame<Object> readXlsx(final InputStream input)
             throws IOException {
         return Serialization.readXlsx(input);
     }
