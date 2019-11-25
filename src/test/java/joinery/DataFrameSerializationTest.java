@@ -210,12 +210,39 @@ public class DataFrameSerializationTest {
     }
 
     @Test
+    public void testReadXlsxInputStream()
+            throws IOException {
+        final DataFrame<Object> df = DataFrame.readXlsx(ClassLoader.getSystemResourceAsStream("serialization.xlsx"));
+        final Object[][] expected = new Object[][] {
+                new Object[] { "a", "a", "b", "b", "c", "c" },
+                new Object[] { "alpha", "bravo", "charlie", "delta", "echo", "foxtrot" },
+                new Object[] { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 }
+        };
+        for (int i = 0; i < expected.length; i++) {
+            assertArrayEquals(
+                    expected[i],
+                    df.col(i).toArray()
+            );
+        }
+    }
+
+    @Test
+    public void testWriteXlsxString()
+            throws IOException {
+        final DataFrame<Object> df = DataFrame.readXlsx(ClassLoader.getSystemResourceAsStream("serialization.xlsx"));
+        final File tmp = File.createTempFile(getClass().getName(), ".xlsx");
+        tmp.deleteOnExit();
+        df.writeXls(tmp.getPath());
+        assertTrue(tmp.length() > 1024);
+    }
+
+    @Test
     public void testWriteXlsString()
     throws IOException {
         final DataFrame<Object> df = DataFrame.readXls(ClassLoader.getSystemResourceAsStream("serialization.xls"));
-        final File tmp = File.createTempFile(getClass().getName(), ".xls");
+        final File tmp = File.createTempFile(getClass().getName(), ".xlsx");
         tmp.deleteOnExit();
-        df.writeXls(tmp.getPath());
+        df.writeXlsx(tmp.getPath());
         assertTrue(tmp.length() > 1024);
     }
 

@@ -2192,6 +2192,19 @@ implements Iterable<List<V>> {
     }
 
     /**
+     * Read data from the input stream as an
+     * excel workbook into a new data frame.
+     *
+     * @param input the input stream
+     * @return a new data frame
+     * @throws IOException if an error occurs reading the input stream
+     */
+    public static final DataFrame<Object> readXlsx(final InputStream input)
+            throws IOException {
+        return Serialization.readXlsx(input);
+    }
+
+    /**
      * Write the data from the data frame
      * to the specified file as an excel workbook.
      *
@@ -2203,11 +2216,16 @@ implements Iterable<List<V>> {
         Serialization.writeXls(this, new FileOutputStream(file));
     }
 
+    public final void writeXlsx(final String file)
+            throws IOException {
+        Serialization.writeXlsx(this, new FileOutputStream(file));
+    }
+
     /**
      * Write the data from the data frame
      * to the provided output stream as an excel workbook.
      *
-     * @param file the file to write
+     * @param output the stream to write
      * @throws IOException if an error occurs writing the file
      */
     public final void writeXls(final OutputStream output)
